@@ -8,7 +8,8 @@ package edu.neumont.jjensen.labs;
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, Program");
+        IoLabProgram ioLab = new IoLabProgram();
+        ioLab.run();
     }
 
 }

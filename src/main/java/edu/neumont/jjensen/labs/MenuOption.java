@@ -20,4 +20,8 @@ public class MenuOption implements MenuOptional {
     public void performAction() {
         action.performAction();
     }
+
+    public String getName() {
+        return name;
+    }
 }
