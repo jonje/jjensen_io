@@ -2,6 +2,7 @@ package edu.neumont.jjensen.labs;
 
 import inputhelper.InputHelpers;
 
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -14,6 +15,7 @@ public class IoLabProgram {
 
     private boolean isRunning;
     private Scanner input;
+    private MyFileReader fileReader;
     private MenuOption[] menuOptions = {
             new MenuOption("Exit", new Actionable() {
                 @Override
@@ -25,20 +27,21 @@ public class IoLabProgram {
             new MenuOption("Display Contacts", new Actionable() {
                 @Override
                 public void performAction() {
-                    displayContacts();
+                    displayAllContacts();
                 }
             })
 
 
     };
 
-    private final String GREETING = "Welcome to contact viewer\nCreated by: Jonathan Jensen\nCopyright 2013";
+    private final String GREETING = "Welcome to contact Viewer\nCreated by: Jonathan Jensen\nCopyright 2013\n";
 
     /**
      * Default constructor setups up the user input stream.
      */
     public IoLabProgram() {
         input = new Scanner(System.in);
+        fileReader = new MyFileReader("/home/jjensen/Projects/Java/jjensen_io/src/main/resources/Contacts.csv");
     }
 
 
@@ -59,9 +62,20 @@ public class IoLabProgram {
         } while(isRunning);
     }
 
-    private void displayContacts() {
-        System.out.println("Display contacts called.");
+    private void displayAllContacts() {
+        getContacts();
+        Iterator<Contact> contacts = fileReader.getContactList();
+        fileReader.displayFile();
 
+
+
+
+    }
+
+    private void getContacts() {
+
+        fileReader.loadFile();
+        fileReader.createContactsList();
     }
 
     private boolean isValidChoice(int choice) {
@@ -85,7 +99,19 @@ public class IoLabProgram {
     }
 
     private void displayGreeting(String greeting) {
-        System.out.println(greeting);
+        int padding = 2;
+        String[] greetings = greeting.split("\n");
+        for(int i = 0; i < greeting.length() + padding; i++) {
+            System.out.print("*");
+        }
+
+
+        System.out.println("\n " + greeting + " \n");
+
+        for(int i = 0; i < greeting.length() + padding; i++) {
+            System.out.print("*");
+        }
+        System.out.println();
     }
 
 
