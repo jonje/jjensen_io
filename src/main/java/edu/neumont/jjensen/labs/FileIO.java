@@ -71,7 +71,7 @@ public class FileIO {
         try {
 
             filePath.createNewFile();
-            fileWriter = new BufferedWriter(new FileWriter(filePath, true));
+            fileWriter = new BufferedWriter(new FileWriter(filePath));
 
             for(Contact contact : contacts) {
                 fileWriter.write(contact.getName() + "," + contact.getEmailAddress() + "," + contact.getPhoneNumber());
