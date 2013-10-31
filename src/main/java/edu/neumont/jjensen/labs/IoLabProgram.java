@@ -2,6 +2,7 @@ package edu.neumont.jjensen.labs;
 
 import inputhelper.InputHelpers;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -15,7 +16,9 @@ public class IoLabProgram {
 
     private boolean isRunning;
     private Scanner input;
-    private MyFileReader fileReader;
+    private FileIO fileIO;
+    private ArrayList<Contact> currentContacts;
+
     private MenuOption[] menuOptions = {
             new MenuOption("Exit", new Actionable() {
                 @Override
@@ -29,10 +32,26 @@ public class IoLabProgram {
                 public void performAction() {
                     displayAllContacts();
                 }
+            }),
+
+            new MenuOption("Display Specific Contact", new Actionable() {
+                @Override
+                public void performAction() {
+                    displaySpecificContact();
+                }
+            }),
+
+            new MenuOption("Add New Contact", new Actionable() {
+                @Override
+                public void performAction() {
+                    createNewContact();
+                }
             })
 
 
     };
+
+
 
     private final String GREETING = "Welcome to contact Viewer\nCreated by: Jonathan Jensen\nCopyright 2013\n";
 
@@ -41,7 +60,8 @@ public class IoLabProgram {
      */
     public IoLabProgram() {
         input = new Scanner(System.in);
-        fileReader = new MyFileReader("/home/jjensen/Projects/Java/jjensen_io/src/main/resources/Contacts.csv");
+        fileIO = new FileIO("/home/jjensen/Projects/Java/jjensen_io/src/main/resources/Contacts.csv");
+        currentContacts = new ArrayList<Contact>();
     }
 
 
@@ -50,10 +70,12 @@ public class IoLabProgram {
     public void run() {
         isRunning = true;
         displayGreeting(GREETING);
+        loadContacts();
+
 
         do{
             displayMenu();
-            int choice = propmptAndGetOptionChoice();
+            int choice = promptAndGetOptionChoice();
             if(isValidChoice(choice)) {
                 menuOptions[choice].performAction();
 
@@ -62,29 +84,48 @@ public class IoLabProgram {
         } while(isRunning);
     }
 
-    private void displayAllContacts() {
-        getContacts();
-        Iterator<Contact> contacts = fileReader.getContactList();
-        fileReader.displayFile();
+    private void displaySpecificContact() {
+        loadContacts();
+        InputHelpers.promptUser("Enter contact id(Ex: 1 ):");
+        Contact contact = currentContacts.get(InputHelpers.extractInt(InputHelpers.getUserInput(input)));
 
-
-
-
+        System.out.println("Name: " + contact.getName());
+        System.out.println("Email: " + contact.getEmailAddress());
+        System.out.println("Phone: " + contact.getPhoneNumber());
     }
 
-    private void getContacts() {
+    private void displayAllContacts() {
+        loadContacts();
 
-        fileReader.loadFile();
-        fileReader.createContactsList();
+        for(int i = 1; i < currentContacts.size(); i++) {
+            System.out.println(i + " - " + currentContacts.get(i).getName());
+        }
+
+        System.out.println();
+    }
+
+    private void loadContacts() {
+
+        fileIO.loadFile();
+        fileIO.createContactsList();
+        currentContacts = new ArrayList<Contact>();
+        Iterator<Contact> contacts = fileIO.getContactList();
+
+        while(contacts.hasNext()) {
+            currentContacts.add(contacts.next());
+
+        }
+
     }
 
     private boolean isValidChoice(int choice) {
-        return choice <= menuOptions.length ? true : false;
+        return choice <= menuOptions.length;
 
     }
 
     private void exit(){
         isRunning = false;
+        System.out.println("\nGood bye!");
     }
 
     private void displayMenu() {
@@ -93,7 +134,7 @@ public class IoLabProgram {
         }
     }
 
-    private int propmptAndGetOptionChoice() {
+    private int promptAndGetOptionChoice() {
         InputHelpers.promptUser("Please enter numerical choice:");
         return InputHelpers.extractInt(InputHelpers.getUserInput(input));
     }
@@ -112,6 +153,22 @@ public class IoLabProgram {
             System.out.print("*");
         }
         System.out.println();
+    }
+
+    private void createNewContact() {
+        InputHelpers.promptUser("\nEnter contact name: ");
+        String name = InputHelpers.getUserInput(input);
+
+        InputHelpers.promptUser("Enter contact email: ");
+        String email = InputHelpers.getUserInput(input);
+
+        InputHelpers.promptUser("Enter phone number: ");
+        String phone = InputHelpers.getUserInput(input);
+
+        currentContacts.add(new Contact(name, email, phone));
+        fileIO.writeFile(currentContacts);
+
+        System.out.println("\nContact created!");
     }
 
 
