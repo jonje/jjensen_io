@@ -2,9 +2,7 @@ package edu.neumont.jjensen.labs;
 
 import inputhelper.InputHelpers;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,7 +15,7 @@ public class IoLabProgram {
     private boolean isRunning;
     private Scanner input;
     private FileIO fileIO;
-    private ArrayList<Contact> currentContacts;
+    private List<Contact> currentContacts;
 
     private MenuOption[] menuOptions = {
             new MenuOption("Exit", new Actionable() {
@@ -27,7 +25,7 @@ public class IoLabProgram {
                 }
             }),
 
-            new MenuOption("Display Contacts", new Actionable() {
+            new MenuOption("Print persons sorted by Name", new Actionable() {
                 @Override
                 public void performAction() {
                     displayPersonNameSort();
@@ -51,10 +49,6 @@ public class IoLabProgram {
 
     };
 
-    private void displayPersonNameSort() {
-    }
-
-
     private final String GREETING = "Welcome to contact Viewer\nCreated by: Jonathan Jensen\nCopyright 2013\n";
 
     /**
@@ -63,7 +57,7 @@ public class IoLabProgram {
     public IoLabProgram() {
         input = new Scanner(System.in);
         fileIO = new FileIO("/home/jjensen/Projects/Java/jjensen_io/src/main/resources/Contacts.csv");
-        currentContacts = new ArrayList<Contact>();
+        currentContacts = new ArrayList<>();
     }
 
 
@@ -86,6 +80,11 @@ public class IoLabProgram {
         } while(isRunning);
     }
 
+    private void displayPersonNameSort() {
+        Collections.sort(currentContacts, Contact.NAME_ORDER);
+        displayAllContacts();
+    }
+
     private void displaySpecificContact() {
         loadContacts();
         InputHelpers.promptUser("Enter contact id(Ex: 1 ):");
@@ -97,10 +96,10 @@ public class IoLabProgram {
     }
 
     private void displayAllContacts() {
-        loadContacts();
+
 
         for(int i = 1; i < currentContacts.size(); i++) {
-            System.out.println(i + " - " + currentContacts.get(i).getName());
+            System.out.println(currentContacts.get(i).toString());
         }
 
         System.out.println();

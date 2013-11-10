@@ -1,5 +1,8 @@
 package edu.neumont.jjensen.labs;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -14,10 +17,19 @@ public class Contact implements Comparable<Contact> {
     private String name;
     private Date birthDate;
     private String phoneNumber;
+    private DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyy");
 
-    public Contact (String name, String birthDate, String phoneNumber) {
+    public Contact (String name, String phoneNumber, String birthDate) {
         this.name = name;
-        this.birthDate = new Date(birthDate);
+
+        try{
+
+            this.birthDate = dateFormat.parse(birthDate);
+
+        } catch(ParseException parseException) {
+            parseException.printStackTrace();
+        }
+
         this.phoneNumber = phoneNumber;
 
 
@@ -56,6 +68,12 @@ public class Contact implements Comparable<Contact> {
     }
 
     @Override
+    public String toString() {
+        return  name + " " + dateFormat.format(birthDate) +
+                " " + phoneNumber ;
+    }
+
+    @Override
     public int hashCode() {
         int result = name.hashCode();
         result = 31 * result + birthDate.hashCode();
@@ -85,7 +103,7 @@ public class Contact implements Comparable<Contact> {
     public static final Comparator<Contact> NAME_ORDER = new Comparator<Contact>() {
         @Override
         public int compare(Contact contact1, Contact contact2) {
-            return contact2.getName().compareTo(contact1.getName());
+            return contact1.getName().compareTo(contact2.getName());
         }
     };
 }

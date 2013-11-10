@@ -13,13 +13,13 @@ import java.util.List;
  */
 public class FileIO {
     private File filePath;
-    private ArrayList<String> fileLines;
-    private ArrayList<Contact> contactList;
+    private List<String> fileLines;
+    private List<Contact> contactList;
 
     public FileIO(String filePath) {
 
-        fileLines = new ArrayList<String>();
-        contactList = new ArrayList<Contact>();
+        fileLines = new ArrayList<>();
+        contactList = new ArrayList<>();
 
         this.filePath = new File(filePath);
 
