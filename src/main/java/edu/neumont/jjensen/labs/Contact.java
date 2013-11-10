@@ -32,8 +32,6 @@ public class Contact implements Comparable<Contact> {
 
         this.phoneNumber = phoneNumber;
 
-
-
     }
 
     public String getName() {

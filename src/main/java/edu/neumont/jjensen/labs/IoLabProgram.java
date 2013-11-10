@@ -44,6 +44,13 @@ public class IoLabProgram {
                 public void performAction() {
                     displayPersonBirthdateSort();
                 }
+            }),
+
+            new MenuOption("Get a single person by Name", new Actionable() {
+                @Override
+                public void performAction() {
+                    displaySpecificContact();
+                }
             })
 
 
@@ -97,13 +104,26 @@ public class IoLabProgram {
     }
 
     private void displaySpecificContact() {
-        loadContacts();
-        InputHelpers.promptUser("Enter contact id(Ex: 1 ):");
-        Contact contact = currentContacts.get(InputHelpers.extractInt(InputHelpers.getUserInput(input)));
+        InputHelpers.promptUser("Enter contact name(Ex: James Url ):");
+        String name = InputHelpers.getUserInput(input);
+        Contact contact = findContact(name);
 
         System.out.println("Name: " + contact.getName());
         System.out.println("Email: " + contact.getBirthDate());
         System.out.println("Phone: " + contact.getPhoneNumber());
+    }
+
+    private Contact findContact(String name) {
+
+        Contact contact = new Contact("Not Found", "000-000-0000", "00/00/0000");
+
+        for (Contact contactCheck : currentContacts) {
+            if(contactCheck.getName().equalsIgnoreCase(name)) {
+                contact = contactCheck;
+            }
+        }
+
+        return contact;
     }
 
     private void displayAllContacts() {
