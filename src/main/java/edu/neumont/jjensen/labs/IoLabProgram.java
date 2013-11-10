@@ -90,7 +90,7 @@ public class IoLabProgram {
         Contact contact = currentContacts.get(InputHelpers.extractInt(InputHelpers.getUserInput(input)));
 
         System.out.println("Name: " + contact.getName());
-        System.out.println("Email: " + contact.getEmailAddress());
+        System.out.println("Email: " + contact.getBirthDate());
         System.out.println("Phone: " + contact.getPhoneNumber());
     }
 

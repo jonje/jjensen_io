@@ -74,7 +74,7 @@ public class FileIO {
             fileWriter = new BufferedWriter(new FileWriter(filePath));
 
             for(Contact contact : contacts) {
-                fileWriter.write(contact.getName() + "," + contact.getEmailAddress() + "," + contact.getPhoneNumber());
+                fileWriter.write(contact.getName() + "," + contact.getBirthDate() + "," + contact.getPhoneNumber());
                 fileWriter.newLine();
                 fileWriter.flush();
             }
