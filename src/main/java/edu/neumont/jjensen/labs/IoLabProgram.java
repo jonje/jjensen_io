@@ -30,7 +30,7 @@ public class IoLabProgram {
             new MenuOption("Display Contacts", new Actionable() {
                 @Override
                 public void performAction() {
-                    displayAllContacts();
+                    displayPersonNameSort();
                 }
             }),
 
@@ -51,6 +51,8 @@ public class IoLabProgram {
 
     };
 
+    private void displayPersonNameSort() {
+    }
 
 
     private final String GREETING = "Welcome to contact Viewer\nCreated by: Jonathan Jensen\nCopyright 2013\n";
