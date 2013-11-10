@@ -89,14 +89,14 @@ public class Contact implements Comparable<Contact> {
     public static final Comparator<Contact> BIRTHDATE_ORDER = new Comparator<Contact>() {
         @Override
         public int compare(Contact contact1, Contact contact2) {
-            return contact2.getBirthDate().compareTo(contact1.getBirthDate());
+            return contact1.getBirthDate().compareTo(contact2.getBirthDate());
         }
     };
 
     public static final Comparator<Contact>  PHONE_ORDER = new Comparator<Contact>() {
         @Override
         public int compare(Contact contact1, Contact contact2) {
-            return contact2.getPhoneNumber().compareTo(contact1.getPhoneNumber());
+            return contact1.getPhoneNumber().compareTo(contact2.getPhoneNumber());
         }
     };
 

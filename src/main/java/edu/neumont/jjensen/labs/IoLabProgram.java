@@ -32,22 +32,23 @@ public class IoLabProgram {
                 }
             }),
 
-            new MenuOption("Display Specific Contact", new Actionable() {
+            new MenuOption("Print persons sorted by PhoneNumber", new Actionable() {
                 @Override
                 public void performAction() {
-                    displaySpecificContact();
+                    displayPersonPhoneSort();
                 }
             }),
 
-            new MenuOption("Add New Contact", new Actionable() {
+            new MenuOption("Print persons sorted by Birth Date", new Actionable() {
                 @Override
                 public void performAction() {
-                    createNewContact();
+                    displayPersonBirthdateSort();
                 }
             })
 
 
     };
+
 
     private final String GREETING = "Welcome to contact Viewer\nCreated by: Jonathan Jensen\nCopyright 2013\n";
 
@@ -82,6 +83,16 @@ public class IoLabProgram {
 
     private void displayPersonNameSort() {
         Collections.sort(currentContacts, Contact.NAME_ORDER);
+        displayAllContacts();
+    }
+
+    private void displayPersonPhoneSort() {
+        Collections.sort(currentContacts, Contact.PHONE_ORDER);
+        displayAllContacts();
+    }
+
+    private void displayPersonBirthdateSort() {
+        Collections.sort(currentContacts, Contact.BIRTHDATE_ORDER);
         displayAllContacts();
     }
 
